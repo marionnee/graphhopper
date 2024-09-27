@@ -18,19 +18,19 @@
 package com.graphhopper.util;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import static com.graphhopper.util.Helper.UTF_CS;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * @author Peter Karich
  */
 public class HelperTest {
-
     @Test
     public void testElevation() {
         assertEquals(9034.1, Helper.uIntToEle(Helper.eleToUInt(9034.1)), .1);
@@ -122,5 +122,92 @@ public class HelperTest {
         assertEquals(145.635986, ele, 1.e-6);
         // ... but converting back to int should yield the same value we started with!
         assertEquals(storedInt, Helper.eleToUInt(ele));
+    }
+    /**DEBUT DES NOUVEAUX TESTS*/
+
+    //Le but de ce test est de voir si on envoye un boolean en string, il renvoyera un boolean.
+    static Stream<String[]> booleanProvider() {
+        return Stream.of(
+                new String[]{"true", "true"},
+                new String[]{"false", "false"},
+                new String[]{"TRUE", "true"},
+                new String[]{"FALSE", "false"}
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("booleanProvider")
+    public void givenBoolean_whenToObject_ReturnBoolean(String input, String expected) {
+        assertEquals(Boolean.parseBoolean(expected), Helper.toObject(input));
+    }
+
+    //Le but de ce test est d'enoyer un integer en string et que il revoye un integer
+    static Stream<String[]> integerProvider() {
+        return Stream.of(
+                new String[]{"123", "123"},
+                new String[]{"-456", "-456"},
+                new String[]{"0", "0"},
+                new String[]{"2147483647", "2147483647"}
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("integerProvider")
+    public void givenInteger_whenToObject_ReturnInteger(String input, String expected) {
+        assertEquals(Integer.parseInt(expected), Helper.toObject(input));
+
+    }
+
+    //Le but de ce test est d'envoyer un long en string et de recevoir un long
+    static Stream<String[]> longProvider() {
+        return Stream.of(
+                new String[]{"9223372036854775807", "9223372036854775807"},
+                new String[]{"-9223372036854775808", "-9223372036854775808"},
+                new String[]{"10000000000", "10000000000"}
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("longProvider")
+    public void givenLong_whenToObject_ReturnLong(String input, String expected) {
+        assertEquals(Long.parseLong(expected), Helper.toObject(input));
+    }
+
+    //Le but de ce test est d'envoyer un float en string et de recevoir le float
+    static Stream<String[]> floatProvider() {
+        return Stream.of(
+                new String[]{"3.14", "3.14"},
+                new String[]{"-0.99", "-0.99"},
+                new String[]{"1.0E10", "1.0E10"}
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("floatProvider")
+    public void givenFloats_whenToObject_ReturnFloat(String input, String expected) {
+        assertEquals(Float.parseFloat(expected), Helper.toObject(input));
+    }
+    //Le but de ce tests est d'envoyer un double en string et de recevoir des doubles
+
+    //Par contre, il semble avoir une mauvaise implementation, car les resultats retourne des float, pas des doubles
+    //Il est donc impossible de tester les double
+    //Par exemple, le 2em assert renvoye un infinie, car le resultat est trop gros pour un float
+/**    @Test
+    public void givenDoubles_whenToObject_returnDouble() {
+        assertEquals(2.718281828459, Helper.toObject("2.718281828459"));
+        assertEquals(1.7976931348623157E308, Helper.toObject("1.7976931348623157E308D"));
+        assertEquals(-1.0E-10, Helper.toObject("-1.0E-10"));
+    }
+ */
+
+    //Le but de ce test est d'envoyer un string qui ne peut pas est vue comme aucune autre valeur, et de recevoir un string
+    static Stream<String[]> stringProvider() {
+        return Stream.of(
+                new String[]{"Hello World", "Hello World"},
+                new String[]{"123abc", "123abc"},
+                new String[]{"true123", "true123"},
+                new String[]{"12.34abc", "12.34abc"}
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("stringProvider")
+    public void givenString_whenToObject_ReturnString(String input, String expected) {
+        assertEquals(expected, Helper.toObject(input));
     }
 }
