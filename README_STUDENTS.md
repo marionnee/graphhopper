@@ -49,3 +49,5 @@ On ajoute des tests à getAreasAsMap car on veut s'assurer que le get, comme le 
 On veut s'assurer que les exception sont traiter et que le resultats soit lui qui est attendue
 
 
+
+
