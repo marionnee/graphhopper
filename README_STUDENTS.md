@@ -1,4 +1,5 @@
 Aléanne Camiré 20239733
+Marion Absalon 20211423
 
 
 
@@ -47,5 +48,46 @@ On veut s'assurer que tout les addAreas valid sont accepter, et ajouter a areas 
 
 On ajoute des tests à getAreasAsMap car on veut s'assurer que le get, comme le add, est bien implementer, et rest bien implementer. 
 On veut s'assurer que les exception sont traiter et que le resultats soit lui qui est attendue
+
+## Test 6:
+### Helper.parseList()
+[Test](./web-api/src/test/java/com/graphhopper/util/HelperTest.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/Helper.java)
+
+Il est important de s'assureer que les fonctions utiles comme parseList soient fonctionnelles. On vérifie alors que les
+bonnes exceptions sont renvoyées lors de la réception d'entrées invalides et on s'assure que ni les espaces ni les charactères
+spéciaux ne posent problème dans le parsing.
+
+## Test 7:
+### Helper.IntToDegree()
+[Test](./web-api/src/test/java/com/graphhopper/util/HelperTest.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/Helper.java)
+
+On complète les tests de conversion entre Int et Degree pour s'assurer que les valeurs sont bien traduites. IntToDegree
+s'occupe des cas maximum et minimum alors il faut vérifier que ces deux cas fonctionnent
+
+## Test 8:
+### TurnCostsConfig.check()
+[Test](./web-api/src/test/java/com/graphhopper/util/TurnCostsConfig.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/TurnCostsConfig.java)
+
+Check est utilisé par le constructeur de TurnCostsConfig, il est alors important de s'assurer qu'il se comporte correctement.
+On vérifie que les entrées sont lues correctement et surtout que les exceptions soient correctement détectées, peut importe la position
+de l'élément incorrect.
+
+## Test 9:
+### RoundaboutInstruction.getExtraInfoJSON()
+[Test](./web-api/src/test/java/com/graphhopper/util/RoundAboutInstruction.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/RoundAboutInstruction.java)
+
+getExtraInfoJSON renvoie des informations sur le
+
+## Test 10:
+### RoundaboutInstruction.get()
+[Test](./web-api/src/test/java/com/graphhopper/util/RoundAboutInstruction.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/RoundAboutInstruction.java)
+
+ 
+
 
 
