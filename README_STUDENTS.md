@@ -80,12 +80,14 @@ de l'élément incorrect.
 [Test](./web-api/src/test/java/com/graphhopper/util/RoundAboutInstruction.java) et
 [Main](./web-api/src/main/java/com/graphhopper/util/RoundAboutInstruction.java)
 
-getExtraInfoJSON renvoie des informations sur le
+getExtraInfoJSON renvoie des informations nécessaires dans plusieurs parties du codes il est donc bien qu'il soit testé. On a vérifié que les informations récupérées de cette fonction soient correctes.
 
 ## Test 10:
-### RoundaboutInstruction.get()
-[Test](./web-api/src/test/java/com/graphhopper/util/RoundAboutInstruction.java) et
-[Main](./web-api/src/main/java/com/graphhopper/util/RoundAboutInstruction.java)
+### TurnCostsConfig.hasLeftRightStraightCosts()
+[Test](./web-api/src/test/java/com/graphhopper/util/TurnCostsConfig.java) et
+[Main](./web-api/src/main/java/com/graphhopper/util/TurnCostsConfig.java)
+
+Cette fonction apporte une des informations cruciales à la navigation qui permet de savoir si il y a un tournant. En cas de malfonction, elle pourrait fausser une grande partie des valeurs du code. Nous avons alors vérifié qu'elle détecte correctement les cas avec et sans tourant en s'assurant qu'elle fonctionne avec différents cas.
 
  
 
