@@ -17,10 +17,15 @@
  */
 package com.graphhopper.util;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
@@ -31,6 +36,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Peter Karich
  */
 public class HelperTest {
+    private static final int DEGREE_FACTOR = 10_000_000;
+
     @Test
     public void testElevation() {
         assertEquals(9034.1, Helper.uIntToEle(Helper.eleToUInt(9034.1)), .1);
@@ -209,5 +216,85 @@ public class HelperTest {
     @MethodSource("stringProvider")
     public void givenString_whenToObject_ReturnString(String input, String expected) {
         assertEquals(expected, Helper.toObject(input));
+    }
+
+
+    // Ici on teste parseList
+
+    // Pour des entrées qui doivent renvoyer des listes vides
+    static Stream<String[]> invalidListsProvider() {
+        return Stream.of(
+                //new String[]{},
+                new String[]{""},
+                new String[]{"[]"},
+                new String[]{"A"},
+                new String[]{"AB"}
+        );
+    }
+    // Des entrées valides qui renvoient leurs listes correspondantes
+    static Stream<String[]> validListsOf3Provider() {
+        return Stream.of(
+                new String[]{"[a,b,c]"},
+                new String[]{"[ a,b,c ]"},
+                new String[]{"[a ,b ,c]"},
+                new String[]{"[ a , b , c ]"},
+                new String[]{"[a,b ,c ]"}
+        );
+    }
+
+    // Test de parseList avec des entrées considérées comme vides
+    @ParameterizedTest
+    @MethodSource ("invalidListsProvider")
+    public void parseList_EmptyLists(String input) {
+        assertEquals(Collections.emptyList(), Helper.parseList(input));
+    }
+
+    // Tests avec entrées valides du format evident attendu
+    @Test
+    public void parseList_TwoElements() {
+        String input = "[a,b]";
+        assertEquals(Arrays.asList("a", "b"), Helper.parseList(input));
+    }
+
+    // Ici on teste si le parsing detecte les elements correctement peut importe les
+    // espaces entre chacun
+    @ParameterizedTest
+    @MethodSource("validListsOf3Provider")
+    public void parseList_MultipleElements(String input) {
+        assertEquals(Arrays.asList("a", "b", "c"), Helper.parseList(input));
+    }
+
+    // Ici on teste si les caractères spéciaux sont bien détectés comme éléments
+    @Test
+    public void parseList_SpecialCharacters() {
+        String input = "[8,[ ,@ ]";
+        assertEquals(Arrays.asList("8", "[", "@"), Helper.parseList(input));
+    }
+
+
+    // Ici on teste la fonction qui va convertir nos coordonnées d'entiers à degrés
+
+    // Cas concernant le max
+    @Test
+    public void testIntToDegree_MaxValue() {
+        int input = Integer.MAX_VALUE;
+        double expected = Double.MAX_VALUE;
+        assertEquals(expected, Helper.intToDegree(input));
+    }
+
+    // Cas du min
+    @Test
+    public void intToDegree_NegativeValue() {
+        int input = -Integer.MAX_VALUE;
+        double expected = -Double.MAX_VALUE;
+        assertEquals(expected, Helper.intToDegree(input));
+    }
+
+    // Cas avec des valeurs normales
+    @ParameterizedTest
+    @ValueSource(ints = {125138, -465321087, 9990215, 111113225, 2, 0, -0, 5352})
+    public void IntToDegree_ValidValues(int input) {
+        double expected = (double) input / DEGREE_FACTOR;
+        assertEquals(expected, Helper.intToDegree(input));
     }
 }
