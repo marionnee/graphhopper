@@ -16,7 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 public class RoundaboutInstructionTest {
-    static Stream<RoundaboutInstruction> validRoundaboutProvider() {
+    // Ici on va tester la fonction qui va recupérer et transmettre les instructions roundabout
+    static Stream<RoundaboutInstruction> roundaboutProvider() {
         return Stream.of(
                 new RoundaboutInstruction(2, "test", new PointList(3, false)),
                 new RoundaboutInstruction(3, "leTest", new PointList(5, true)),
@@ -24,9 +25,11 @@ public class RoundaboutInstructionTest {
                 new RoundaboutInstruction(6, "tout8Test", new PointList(78, true))
         );
     }
+
+    // On vérifie que la fonction fonctionne avec des valeurs différentes
     @ParameterizedTest
-    @MethodSource("validRoundaboutProvider")
-    public void getExtraInfoJSON_validEntries(RoundaboutInstruction input) {
+    @MethodSource("roundaboutProvider")
+    public void getExtraInfoJSON_Entries(RoundaboutInstruction input) {
 
         input.setExitNumber(1);
         input.setExited();

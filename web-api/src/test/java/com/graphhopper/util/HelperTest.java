@@ -218,10 +218,10 @@ public class HelperTest {
         assertEquals(expected, Helper.toObject(input));
     }
 
-    // test de parseList
 
+    // Ici on teste parseList
 
-    // Pour des entrées vides
+    // Pour des entrées qui doivent renvoyer des listes vides
     static Stream<String[]> invalidListsProvider() {
         return Stream.of(
                 //new String[]{},
@@ -231,6 +231,7 @@ public class HelperTest {
                 new String[]{"AB"}
         );
     }
+    // Des entrées valides qui renvoient leurs listes correspondantes
     static Stream<String[]> validListsOf3Provider() {
         return Stream.of(
                 new String[]{"[a,b,c]"},
@@ -241,18 +242,20 @@ public class HelperTest {
         );
     }
 
+    // Test de parseList avec des entrées considérées comme vides
     @ParameterizedTest
     @MethodSource ("invalidListsProvider")
     public void parseList_EmptyLists(String input) {
         assertEquals(Collections.emptyList(), Helper.parseList(input));
     }
 
-    // Tests avec entrées valides
+    // Tests avec entrées valides du format evident attendu
     @Test
     public void parseList_TwoElements() {
         String input = "[a,b]";
         assertEquals(Arrays.asList("a", "b"), Helper.parseList(input));
     }
+
     // Ici on teste si le parsing detecte les elements correctement peut importe les
     // espaces entre chacun
     @ParameterizedTest
@@ -261,13 +264,17 @@ public class HelperTest {
         assertEquals(Arrays.asList("a", "b", "c"), Helper.parseList(input));
     }
 
-    // Ici on teste si les characteres speciaux sont bien detectes comme elements
+    // Ici on teste si les caractères spéciaux sont bien détectés comme éléments
     @Test
     public void parseList_SpecialCharacters() {
         String input = "[8,[ ,@ ]";
         assertEquals(Arrays.asList("8", "[", "@"), Helper.parseList(input));
     }
 
+
+    // Ici on teste la fonction qui va convertir nos coordonnées d'entiers à degrés
+
+    // Cas concernant le max
     @Test
     public void testIntToDegree_MaxValue() {
         int input = Integer.MAX_VALUE;
@@ -275,6 +282,7 @@ public class HelperTest {
         assertEquals(expected, Helper.intToDegree(input));
     }
 
+    // Cas du min
     @Test
     public void intToDegree_NegativeValue() {
         int input = -Integer.MAX_VALUE;
@@ -282,7 +290,7 @@ public class HelperTest {
         assertEquals(expected, Helper.intToDegree(input));
     }
 
-    // Test with valid inputs
+    // Cas avec des valeurs normales
     @ParameterizedTest
     @ValueSource(ints = {125138, -465321087, 9990215, 111113225, 2, 0, -0, 5352})
     public void IntToDegree_ValidValues(int input) {
