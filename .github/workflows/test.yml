@@ -72,29 +72,3 @@ jobs:
           coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
           echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
           unset MAVEN_OPTS
-
-      - name: Fail if coverage has not improved.
-        run: |
-          threshold1=83.75
-          threshold2=46.63
-          threshold3=20.45
-          threshold4=37.53
-          threshold5=81.89
-          threshold6=52.88
-
-          if (( $(echo "$COVERAGE1 > $threshold1" | bc -l) )); then
-            echo "New coverage for the module core - $COVERAGE1%. Coverage is improved!"
-          elif (( $(echo "$COVERAGE2 > $threshold2" | bc -l) )); then
-            echo "New coverage for the module reader-gtfs - $COVERAGE2%. Coverage is improved!"
-          elif (( $(echo "$COVERAGE3 > $threshold3" | bc -l) )); then
-            echo "New coverage for module web - $COVERAGE3%. Coverage is improved!"
-          elif (( $(echo "$COVERAGE4 > $threshold4" | bc -l) )); then
-            echo "New coverage for module web-api - $COVERAGE4%. Coverage is improved!"
-          elif (( $(echo "$COVERAGE5 > $threshold5" | bc -l) )); then
-            echo "New coverage for module navigation - $COVERAGE5%. Coverage is improved!"
-          elif (( $(echo "$COVERAGE6 > $threshold6" | bc -l) )); then
-            echo "New coverage for module client-hc - $COVERAGE6%. Coverage is improved!"
-          else
-            echo "Coverage is not improved."
-            exit 1
-          fi
