@@ -56,7 +56,7 @@ jobs:
           echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
 
       - name: MinHeapSize added, check coverage
-        id: MINHEAPSIZE COVERAGE
+        id: MINHEAPSIZE_COVERAGE
         run: |
           export MAVEN_OPTS="-XX:MaxHeapSize=50000"
           coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
