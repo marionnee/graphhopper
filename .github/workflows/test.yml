@@ -55,10 +55,10 @@ jobs:
           coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
           echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
 
-      - name: MinHeapSize added, check coverage
-        id: MINHEAPSIZE_COVERAGE
+      - name: Allow on demand vectorization is turned off
+        id: OnDemandeVectorizationFalse_COVERAGE
         run: |
-          export MAVEN_OPTS="-XX:MaxHeapSize=50000"
+          export MAVEN_OPTS="-XX:-AllowVectorizeOnDemand"
           coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
           echo "COVERAGE1=$coverage1" >> $GITHUB_ENV
           coverage2=$(python3 config/coverage.py reader-gtfs/target/site/jacoco/jacoco.csv) 
