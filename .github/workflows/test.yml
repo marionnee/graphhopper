@@ -97,7 +97,7 @@ jobs:
       - name: Abort VM on compilation failure
         id: AbortVMOnCompilationFailure_COVERAGE
         run: |
-          export MAVEN_OPTS="-XX:AbortVMOnCompilationFailure=true"
+          export MAVEN_OPTS="-XX:+UnlockDiagnosticVMOptions -XX:AbortVMOnCompilationFailure=true"
           mvn -B clean verify
           coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
           echo "COVERAGE1=$coverage1" >> $GITHUB_ENV
