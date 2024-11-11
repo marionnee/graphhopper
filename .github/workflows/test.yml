@@ -92,3 +92,61 @@ jobs:
           coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
           echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
           unset MAVEN_OPTS
+          
+
+      - name: Abort VM on compilation failure
+        id: AbortVMOnCompilationFailure_COVERAGE
+        run: |
+          export MAVEN_OPTS="-XX:+UnlockDiagnosticVMOptions -XX:+AbortVMOnCompilationFailure"
+          mvn -B clean verify
+          coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE1=$coverage1" >> $GITHUB_ENV
+          coverage2=$(python3 config/coverage.py reader-gtfs/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE2=$coverage2" >> $GITHUB_ENV
+          coverage3=$(python3 config/coverage.py web/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE3=$coverage3" >> $GITHUB_ENV
+          coverage4=$(python3 config/coverage.py web-api/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE4=$coverage4" >> $GITHUB_ENV
+          coverage5=$(python3 config/coverage.py navigation/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE5=$coverage5" >> $GITHUB_ENV
+          coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
+          unset MAVEN_OPTS
+          
+      - name: Eliminate allocations
+        id: EliminateAllocations_COVERAGE
+        run: |
+          export MAVEN_OPTS="-XX:+EliminateAllocations"
+          mvn -B clean verify
+          coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE1=$coverage1" >> $GITHUB_ENV
+          coverage2=$(python3 config/coverage.py reader-gtfs/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE2=$coverage2" >> $GITHUB_ENV
+          coverage3=$(python3 config/coverage.py web/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE3=$coverage3" >> $GITHUB_ENV
+          coverage4=$(python3 config/coverage.py web-api/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE4=$coverage4" >> $GITHUB_ENV
+          coverage5=$(python3 config/coverage.py navigation/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE5=$coverage5" >> $GITHUB_ENV
+          coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
+          unset MAVEN_OPTS
+
+      - name: Turned on background compilation
+        id: BackgroundCompilationTrue_COVERAGE
+        run: |
+          export MAVEN_OPTS="-XX:+BackgroundCompilation"
+          mvn -B clean verify
+          coverage1=$(python3 config/coverage.py core/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE1=$coverage1" >> $GITHUB_ENV
+          coverage2=$(python3 config/coverage.py reader-gtfs/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE2=$coverage2" >> $GITHUB_ENV
+          coverage3=$(python3 config/coverage.py web/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE3=$coverage3" >> $GITHUB_ENV
+          coverage4=$(python3 config/coverage.py web-api/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE4=$coverage4" >> $GITHUB_ENV
+          coverage5=$(python3 config/coverage.py navigation/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE5=$coverage5" >> $GITHUB_ENV
+          coverage6=$(python3 config/coverage.py client-hc/target/site/jacoco/jacoco.csv) 
+          echo "COVERAGE6=$coverage6" >> $GITHUB_ENV
+          unset MAVEN_OPTS
