@@ -18,7 +18,7 @@ En ajoutant cette flag, on s'assure que le heap size est asser grand, même quan
 Ceci à donc pour but de s'assurer que le code est fonctionnelle même quand l'ajustement dynamique du heap ne fonctionne pas
 
 ## Flag 3:
-### Abort VM on compilation failure = true
+### Abort VM on compilation failure
 [Line 97-114](./.github/workflows/test.yml)
 
 En activant cette flag, on interrompt l'exécution de la machine virtuelle en cas d'échec
