@@ -30,7 +30,7 @@ dans un état valide.
 ### Eliminate allocations
 [Line 116-133](./.github/workflows/test.yml)
 
-En activant cette flag, on demande à la JVM d'éliminer les allocations inutiles d'objets pendant
+En activant cette flag, on demande à la machine virtuelle d'éliminer les allocations inutiles d'objets pendant
 l'exécution du programme. Cela peut réduire les coûts de performance tout en améliorant l'efficacité
 du programme.
 
